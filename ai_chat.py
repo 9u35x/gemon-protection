@@ -59,7 +59,7 @@ def ask_ai(user_text: str, history: Optional[list] = None) -> str:
     if not is_ai_ready():
         return "❌ لا يوجد مفتاح.\nRailway → OPENROUTER_API_KEY\nhttps://openrouter.ai/keys"
     err = "❌ تعذر الاتصال."
-    for fn in (_ask_openrouter, _ask_gemini):
+    for fn in (_ask_openrouter, _ask_groq, _ask_gemini):
         r = fn(text)
         if r and not r.startswith("❌") and not r.startswith("⚠️"): return r
         if r: err = r
