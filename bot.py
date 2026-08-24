@@ -607,7 +607,10 @@ async def text_router(message: Message):
             await message.reply("❌ أضف GEMINI_API_KEY في Railway Variables ثم Redeploy")
             return
         wait = await message.reply("⏳ جيمون يفكر...")
-        answer = ask_ai(ai_question)
+        try:
+            answer = await asyncio.wait_for(asyncio.to_thread(ask_ai, ai_question), timeout=25)
+        except asyncio.TimeoutError:
+            answer = "\u23f1\ufe0f انتهى الوقت — جرب مرة ثانية بعد شوي."
         try:
             await wait.edit_text(answer)
         except Exception:
