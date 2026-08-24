@@ -15,7 +15,7 @@ def _post(url, headers, payload):
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=55) as r:
+        with urllib.request.urlopen(req, timeout=15) as r:
             return 200, json.loads(r.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         return e.code, e.read().decode("utf-8", errors="ignore")
@@ -59,7 +59,7 @@ def ask_ai(user_text: str, history: Optional[list] = None) -> str:
     if not is_ai_ready():
         return "❌ لا يوجد مفتاح.\nRailway → OPENROUTER_API_KEY\nhttps://openrouter.ai/keys"
     err = "❌ تعذر الاتصال."
-    for fn in (_ask_openrouter, _ask_groq, _ask_gemini):
+    for fn in (_ask_groq, _ask_openrouter, _ask_gemini):
         r = fn(text)
         if r and not r.startswith("❌") and not r.startswith("⚠️"): return r
         if r: err = r
