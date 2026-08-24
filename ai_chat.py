@@ -40,7 +40,7 @@ def _ask_openrouter(text: str) -> str:
     return f"❌ OpenRouter فشل ({last})"
 def _ask_gemini(text: str) -> str:
     if not GEMINI_API_KEY: return ""
-    for model in ["gemini-1.5-flash", "gemini-1.5-flash-latest", "gemini-2.0-flash"]:
+    for model in ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.0-flash", "gemini-2.0-flash-001", "gemini-1.5-flash", "gemini-1.5-flash-latest", "gemini-1.5-pro", "gemini-pro"]:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_API_KEY}"
         payload = {"contents": [{"role": "user", "parts": [{"text": SYSTEM + "\n\n" + text}]}], "generationConfig": {"temperature": 0.7, "maxOutputTokens": 1024}}
         code, body = _post(url, {"Content-Type": "application/json"}, payload)
