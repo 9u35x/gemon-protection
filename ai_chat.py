@@ -5,7 +5,7 @@ log = logging.getLogger("jaimon.ai")
 OPENROUTER_API_KEY = (os.getenv("OPENROUTER_API_KEY") or "").strip()
 GEMINI_API_KEY = (os.getenv("GEMINI_API_KEY") or "").strip()
 GROQ_API_KEY = (os.getenv("GROQ_API_KEY") or "").strip()
-GROQ_MODELS = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768", "gemma2-9b-it"]
+GROQ_MODELS = ["openai/gpt-oss-20b", "allam-2-7b", "openai/gpt-oss-120b", "qwen/qwen3.6-27b"]
 OPENROUTER_MODELS = [m for m in [(os.getenv("AI_MODEL") or "").strip(),"meta-llama/llama-3.2-3b-instruct:free","google/gemma-2-9b-it:free","microsoft/phi-3-mini-128k-instruct:free"] if m]
 SYSTEM = "أنت جيمون، مساعد ذكي في تليجرام. أجب بالعربية باختصار ووضوح بطابع عراقي خفيف."
 def is_ai_ready() -> bool:
