@@ -13,6 +13,8 @@ def is_ai_ready() -> bool:
 def provider_status() -> str:
     return f"OpenRouter: {'✅' if OPENROUTER_API_KEY else '❌'} | Gemini: {'✅' if GEMINI_API_KEY else '❌'} | Groq: {'✅' if GROQ_API_KEY else '❌'}"
 def _post(url, headers, payload):
+    headers = dict(headers)
+    headers.setdefault("User-Agent", "Mozilla/5.0 (compatible; GemonBot/1.0)")
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     try:
