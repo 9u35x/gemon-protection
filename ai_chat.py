@@ -67,13 +67,16 @@ def ask_ai(user_text: str, history: Optional[list] = None) -> str:
     return err
 
 def _ask_groq(text: str) -> str:
+    log.info(f"GROQ_KEY_SET={bool(GROQ_API_KEY)}")
     if not GROQ_API_KEY: return ""
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     last = ""
     for model in GROQ_MODELS:
+        log.info(f"trying groq model={model}")
         payload = {"model": model, "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": text[:4000]}], "temperature": 0.7, "max_tokens": 1024}
         code, body = _post(url, headers, payload)
+        log.info(f"groq: model={model} code={code} body={str(body)[:200]}")
         if code == 200 and isinstance(body, dict):
             try:
                 out = (body["choices"][0]["message"]["content"] or "").strip()
